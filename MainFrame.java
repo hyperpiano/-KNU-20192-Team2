@@ -7,7 +7,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException; 
+import java.awt.Desktop;
 import javax.swing.JButton;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JFrame;
@@ -30,17 +33,17 @@ public class MainFrame extends JFrame {
 	static JMenuBar MenuBar = new JMenuBar();
 	static JPanel MainPane = new JPanel();
 	
-	static String columnNames[] = {"직원 ID", "이름", "소속", "직책", "전화번호"};
+	static String columnNames[] = {"���� ID", "�̸�", "�Ҽ�", "��å", "��ȭ��ȣ"};
 	
 	static DefaultTableModel realTableModel = new DefaultTableModel(null, columnNames) {
 		public boolean isCellEditable(int row, int column) {
-			return false;			// 테이블을 직접 수정하는 것은 불가능하도록 함
+			return false;			// ���̺��� ���� �����ϴ� ���� �Ұ����ϵ��� ��
 		}
 	};
 	
 	static DefaultTableModel fakeTableModel = new DefaultTableModel(null, columnNames) {
 		public boolean isCellEditable(int row, int column) {
-			return false;			// 테이블을 직접 수정하는 것은 불가능하도록 함
+			return false;			// ���̺��� ���� �����ϴ� ���� �Ұ����ϵ��� ��
 		}
 	};
 	
@@ -63,7 +66,7 @@ public class MainFrame extends JFrame {
 	
 	public MainFrame() {
 		
-		this.setTitle("경기 S/W 직원 관리 프로그램");
+		this.setTitle("��� S/W ���� ���� ���α׷�");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setJMenuBar(MenuBar);
 		
@@ -72,8 +75,8 @@ public class MainFrame extends JFrame {
 		MainPane.setLayout(new BorderLayout(30, 20));
 		MainPane.add(DBListPane, BorderLayout.CENTER);
 		
-		realJTable.setSelectionMode(0);			// 한번에 하나의 Row만 선택할 수 있도록 설정
-		fakeJTable.setSelectionMode(0);			// 한번에 하나의 Row만 선택할 수 있도록 설정
+		realJTable.setSelectionMode(0);			// �ѹ��� �ϳ��� Row�� ������ �� �ֵ��� ����
+		fakeJTable.setSelectionMode(0);			// �ѹ��� �ϳ��� Row�� ������ �� �ֵ��� ����
 		DefaultTableCellRenderer CellRenderer = new DefaultTableCellRenderer();
 		CellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 		TableColumnModel realTCM = realJTable.getColumnModel();
@@ -89,7 +92,7 @@ public class MainFrame extends JFrame {
 		Dimension frameSize = this.getSize();
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation((screenSize.width - frameSize.width)/2, (screenSize.height - frameSize.height)/2);
-		// 스크린의 중앙에 배치
+		// ��ũ���� �߾ӿ� ��ġ
 		
 		this.setResizable(false);
 		this.setVisible(true);
@@ -115,13 +118,13 @@ public class MainFrame extends JFrame {
 			Menu[0].add(DBMenuItem[i]);
 		}
 		
-		OPMenuItem[0] = new JMenuItem("신규직원 추가");
-		OPMenuItem[1] = new JMenuItem("직원정보 삭제");
-		OPMenuItem[2] = new JMenuItem("직원정보 변경");
-		OPMenuItem[3] = new JMenuItem("직원 검색");
-		OPMenuItem[4] = new JMenuItem("목록 정렬");
-		OPMenuItem[5] = new JMenuItem("선물하기");
-		OPMenuItem[6] = new JMenuItem("직원 평가");
+		OPMenuItem[0] = new JMenuItem("�ű����� �߰�");
+		OPMenuItem[1] = new JMenuItem("�������� ����");
+		OPMenuItem[2] = new JMenuItem("�������� ����");
+		OPMenuItem[3] = new JMenuItem("���� �˻�");
+		OPMenuItem[4] = new JMenuItem("��� ����");
+		OPMenuItem[5] = new JMenuItem("�����ϱ�");
+		OPMenuItem[6] = new JMenuItem("���� ��");
 		
 		for(int i = 0; i < OPMenuItem.length; i++) {
 			OPMenuItem[i].addActionListener(new MenuActionListener());
@@ -166,7 +169,7 @@ public class MainFrame extends JFrame {
 				for(int i = 0; i < SW.UserTable.User.size(); i++)
 					addUser(SW.UserTable.User.elementAt(i));
 				
-				SW.HRSW.logging(FileName + "을 읽음");
+				SW.HRSW.logging(FileName + "�� ����");
 			}
 			else if(cmd.equals("Save")) {
 				FileDialog FD = new FileDialog();
@@ -174,27 +177,27 @@ public class MainFrame extends JFrame {
 				if(FileName == null)
 					return;
 				SW.HRSW.saveToFile(FileName);
-				SW.HRSW.logging(FileName + "에 저장");
+				SW.HRSW.logging(FileName + "�� ����");
 			}
-			else if(cmd.equals("신규직원 추가")) {
+			else if(cmd.equals("�ű����� �߰�")) {
 				new OperationsDialog(SW.Main.mainFrame, cmd);
 			}
-			else if(cmd.equals("직원정보 삭제")) {
+			else if(cmd.equals("�������� ����")) {
 				new OperationsDialog(SW.Main.mainFrame, cmd);
 			}
-			else if(cmd.equals("직원정보 변경")) {
+			else if(cmd.equals("�������� ����")) {
 				new OperationsDialog(SW.Main.mainFrame, cmd);
 			}
-			else if(cmd.equals("직원 검색")) {
+			else if(cmd.equals("���� �˻�")) {
 				new OperationsDialog(SW.Main.mainFrame, cmd);
 			}
-			else if(cmd.equals("목록 정렬")) {
+			else if(cmd.equals("��� ����")) {
 				new OperationsDialog(SW.Main.mainFrame, cmd);
 			}
-			else if(cmd.equals("선물하기")) {
+			else if(cmd.equals("�����ϱ�")) {
 				new OperationsDialog(SW.Main.mainFrame,cmd);
 			}
-			else if(cmd.contentEquals("직원 평가")){
+			else if(cmd.contentEquals("���� ��")){
 				new OperationsDialog(SW.Main.mainFrame,cmd);
 			}
 			else if(cmd.equals("Change the Log File")) {
@@ -203,7 +206,7 @@ public class MainFrame extends JFrame {
 				HRSW.changeLogFile(LogFileName);
 				if(LogFileName == null)
 					return;
-				SW.HRSW.logging(LogFileName + "로 로그 파일 변경");
+				SW.HRSW.logging(LogFileName + "�� �α� ���� ����");
 			}
 			else if(cmd.equals("Show the Log File")) {
 				if(Toggle) {		// Show the DB
@@ -216,11 +219,11 @@ public class MainFrame extends JFrame {
 				}
 			}
 			else if(cmd.equals("Quit")) {
-				new SaveDialog(SW.Main.mainFrame, "<html><div style=text-align:center>이대로 종료하면 지금까지 작업한 데이터를 "
-						+ "<br>잃어버릴 수 있습니다. 종료하시겠습니까?</div></html>");
+				new SaveDialog(SW.Main.mainFrame, "<html><div style=text-align:center>�̴�� �����ϸ� ���ݱ��� �۾��� �����͸� "
+						+ "<br>�Ҿ���� �� �ֽ��ϴ�. �����Ͻðڽ��ϱ�?</div></html>");
 			}
 			else 
-				System.out.println("잘못된 메뉴 처리");
+				System.out.println("�߸��� �޴� ó��");
 		}
 	}
 	
@@ -305,30 +308,30 @@ public class MainFrame extends JFrame {
 	
 	public static void searchingUser(Object tempObject[], int selected) {
 		/*
-		 * 기준 - 	ID : 0
-		 * 		 	이름 : 1
-		 * 			부서 : 2
-		 * 			매니저명 : 3
+		 * ���� - 	ID : 0
+		 * 		 	�̸� : 1
+		 * 			�μ� : 2
+		 * 			�Ŵ����� : 3
 		 */
 		String str = tempObject[selected].toString();
-		fakeTableModel.setRowCount(0);				// 초기화
+		fakeTableModel.setRowCount(0);				// �ʱ�ȭ
 		
 		switch(selected) {
 		case 0:		// ID
 			SW.UserTable.searchById(str);
-			SW.HRSW.logging("직원 검색 - 기준:ID(" + str + ")");
+			SW.HRSW.logging("���� �˻� - ����:ID(" + str + ")");
 			break;
-		case 1:		// 이름
+		case 1:		// �̸�
 			SW.UserTable.searchByName(str);
-			SW.HRSW.logging("직원 검색 - 기준:이름(" + str + ")");
+			SW.HRSW.logging("���� �˻� - ����:�̸�(" + str + ")");
 			break;
-		case 2:		// 부서
+		case 2:		// �μ�
 			SW.UserTable.searchByDepart(str);
-			SW.HRSW.logging("직원 검색 - 기준:부서(" + str + ")");
+			SW.HRSW.logging("���� �˻� - ����:�μ�(" + str + ")");
 			break;
-		case 3:		// 매니저명
+		case 3:		// �Ŵ�����
 			SW.UserTable.searchByManager(str);
-			SW.HRSW.logging("직원 검색 - 기준:매니저명(" + str + ")");
+			SW.HRSW.logging("���� �˻� - ����:�Ŵ�����(" + str + ")");
 			break;
 		default:
 			break;
@@ -339,17 +342,17 @@ public class MainFrame extends JFrame {
 		MainPane.add(SDBListPane, BorderLayout.CENTER);
 		
 		if(fakeTableModel.getRowCount() == 0) {
-			new ErrorDialog(SW.Main.mainFrame, "<html><div style=text-align:center>조건에 맞는 데이터가 없습니다.<br>모든결과를 가져옵니다.</div></html>");
-			SW.HRSW.logging("직원 검색 - 검색 실패 모든 직원 출력");
+			new ErrorDialog(SW.Main.mainFrame, "<html><div style=text-align:center>���ǿ� �´� �����Ͱ� �����ϴ�.<br>������� �����ɴϴ�.</div></html>");
+			SW.HRSW.logging("���� �˻� - �˻� ���� ��� ���� ���");
 			SW.UserTable.addAllUser();
 		}
 		
-		correctButton = new JButton("변경");
-		deleteButton = new JButton("삭제");
-		returnButton = new JButton("돌아가기");
-		presentButton = new JButton("선물하기");
-		scoreButton = new JButton("직원 평가");
-		infoButton = new JButton("상세 정보");
+		correctButton = new JButton("����");
+		deleteButton = new JButton("����");
+		returnButton = new JButton("���ư���");
+		presentButton = new JButton("�����ϱ�");
+		scoreButton = new JButton("���� ��");
+		infoButton = new JButton("�� ����");
 		
 		correctButton.addMouseListener(new ButtonListener());
 		deleteButton.addMouseListener(new ButtonListener());
@@ -378,8 +381,8 @@ public class MainFrame extends JFrame {
 				Object tempObject[] = new Object[5];
 				for(int i = 0; i < tempObject.length; i++)
 					tempObject[i] = fakeJTable.getValueAt(selected, i);
-				if(tempObject[4].toString().equals("O")) {				// 매니저는 변경 불가능
-					new ErrorDialog(SW.Main.mainFrame, "매니저는 변경 불가능합니다!");
+				if(tempObject[4].toString().equals("O")) {				// �Ŵ����� ���� �Ұ���
+					new ErrorDialog(SW.Main.mainFrame, "�Ŵ����� ���� �Ұ����մϴ�!");
 					return;
 				}
 				new OperationsDialog(SW.Main.mainFrame, tempObject);
@@ -389,15 +392,15 @@ public class MainFrame extends JFrame {
 				Object tempObject[] = new Object[9];
 				for(int i = 0; i < tempObject.length; i++)
 					tempObject[i] = fakeJTable.getValueAt(selected, i);
-				if(tempObject[4].toString().equals("O")) {				// 매니저는 삭제 불가능
-					new ErrorDialog(SW.Main.mainFrame, "매니저는 삭제 불가능합니다!");
+				if(tempObject[4].toString().equals("O")) {				// �Ŵ����� ���� �Ұ���
+					new ErrorDialog(SW.Main.mainFrame, "�Ŵ����� ���� �Ұ����մϴ�!");
 					return;
 				}
 				
 				fakeTableModel.removeRow(selected);
 				SW.UserTable.deleteUser(tempObject[0].toString());
 				realTableModel.removeRow(findRow(tempObject[0].toString()));
-				SW.HRSW.logging("직원정보 삭제 - ID(" + tempObject[0].toString() + ")");
+				SW.HRSW.logging("�������� ���� - ID(" + tempObject[0].toString() + ")");
 			}
 			else if(e.getSource().equals(returnButton)) {
 				if(Toggle)
@@ -406,15 +409,24 @@ public class MainFrame extends JFrame {
 					showDBPane();
 			}
 			else if(e.getSource().equals(presentButton)){
-				new present(SW.Main.mainFrame);
+				try { 
+					Desktop.getDesktop().browse(new URI("http://mdago.tistory.com/")); 
+					} catch (IOException o) 
+				{
+						o.printStackTrace(); 
+						} catch (URISyntaxException o) 
+				{
+							o.printStackTrace(); 
+							}
+
 			}
 			else if(e.getSource().equals(scoreButton)) {
 				int selected = fakeJTable.getSelectedRow();
 				Object tempObject[] = new Object[5];
 				for(int i = 0; i < tempObject.length; i++)
 					tempObject[i] = fakeJTable.getValueAt(selected, i);
-				if(tempObject[4].toString().equals("O")) {				// 매니저는 변경 불가능
-					new ErrorDialog(SW.Main.mainFrame, "매니저는 변경 불가능합니다!");
+				if(tempObject[4].toString().equals("O")) {				// �Ŵ����� ���� �Ұ���
+					new ErrorDialog(SW.Main.mainFrame, "�Ŵ����� ���� �Ұ����մϴ�!");
 					return;
 				}
 				new Evaluation(SW.Main.mainFrame, tempObject);
@@ -424,8 +436,8 @@ public class MainFrame extends JFrame {
 				Object tempObject[] = new Object[5];
 				for(int i = 0; i < tempObject.length; i++)
 					tempObject[i] = fakeJTable.getValueAt(selected, i);
-				if(tempObject[4].toString().equals("O")) {				// 매니저는 변경 불가능
-					new ErrorDialog(SW.Main.mainFrame, "매니저는 변경 불가능합니다!");
+				if(tempObject[4].toString().equals("O")) {				// �Ŵ����� ���� �Ұ���
+					new ErrorDialog(SW.Main.mainFrame, "�Ŵ����� ���� �Ұ����մϴ�!");
 					return;
 				}
 				new info(SW.Main.mainFrame, tempObject);
