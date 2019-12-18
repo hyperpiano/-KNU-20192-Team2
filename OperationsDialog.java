@@ -35,6 +35,7 @@ public class OperationsDialog extends JDialog {
 	JTextField address;
 	JTextField email;
 	JTextField phone;
+	JTextField url;
 	String addr;
 	String mail;
 	String num;
@@ -44,20 +45,20 @@ public class OperationsDialog extends JDialog {
 	JComboBox crit1;
 	JComboBox crit2;
 	JButton submit;
-	JButton cancel = new JButton("Ãë¼Ò");
+	JButton cancel = new JButton("ì·¨ì†Œ");
 	
 	ButtonGroup group = new ButtonGroup();
 	JRadioButton radioId = new JRadioButton("      ID :  ", true);
-	JRadioButton radioName = new JRadioButton("      ÀÌ¸§ :  ");
-	JRadioButton radioDepart = new JRadioButton("      ºÎ¼­ :  ");
-	JRadioButton radioManager = new JRadioButton("      ¸Å´ÏÀú :  ");
+	JRadioButton radioName = new JRadioButton("      ì´ë¦„ :  ");
+	JRadioButton radioDepart = new JRadioButton("      ë¶€ì„œ :  ");
+	JRadioButton radioManager = new JRadioButton("      ë§¤ë‹ˆì € :  ");
 	
-	String item1[] = {"ºñ¼­½Ç", "ÃÑ¹«ÆÀ", "ÀÎ»çÆÀ", "°³¹ß1ÆÀ", "°³¹ß2ÆÀ", "°³¹ß3ÆÀ"};
+	String item1[] = {"ë¹„ì„œì‹¤", "ì´ë¬´íŒ€", "ì¸ì‚¬íŒ€", "ê°œë°œ1íŒ€", "ê°œë°œ2íŒ€", "ê°œë°œ3íŒ€"};
 	String item2[] = {"Staff"};
 	String item3[] = {"SW Developer", "SW Tester"};
 	String item4[] = new String[6];
-	String item5[] = {"ID", "ÀÌ¸§", "ºÎ¼­", "Á÷Ã¥", "¸Å´ÏÀú"};
-	String item6[] = {"¿À¸§Â÷¼ø", "³»¸²Â÷¼ø"};
+	String item5[] = {"ID", "ì´ë¦„", "ë¶€ì„œ", "ì§ì±…", "ë§¤ë‹ˆì €"};
+	String item6[] = {"ì˜¤ë¦„ì°¨ìˆœ", "ë‚´ë¦¼ì°¨ìˆœ"};
 	
 	public OperationsDialog (JFrame frame, String cmd) {
 		super(frame, cmd, true);
@@ -68,33 +69,33 @@ public class OperationsDialog extends JDialog {
 		MainPanel.add(BottomPanel);
 		
 		
-		if(cmd.equals("½Å±ÔÁ÷¿ø Ãß°¡")) {
+		if(cmd.equals("ì‹ ê·œì§ì› ì¶”ê°€")) {
 			TopPanel.setLayout(new GridLayout(4, 2));
-			submit = new JButton("È®ÀÎ");
+			submit = new JButton("í™•ì¸");
 			TopPanel.add(new JLabel("      ID : "));
 			TopPanel.add(id = new JTextField());
-			id.setPreferredSize(new Dimension(120, 20));	// id¸¸ Å©±â ÁöÁ¤ÇØÁàµµ ¸ğµç Grid¿¡ Àû¿ëµÊ
+			id.setPreferredSize(new Dimension(120, 20));	// idë§Œ í¬ê¸° ì§€ì •í•´ì¤˜ë„ ëª¨ë“  Gridì— ì ìš©ë¨
 			
-			TopPanel.add(new JLabel("      ÀÌ¸§ : "));
+			TopPanel.add(new JLabel("      ì´ë¦„ : "));
 			TopPanel.add(name = new JTextField());
 			
-			TopPanel.add(new JLabel("      ºÎ¼­ : "));
+			TopPanel.add(new JLabel("      ë¶€ì„œ : "));
 			TopPanel.add(depart = new JComboBox(item1));
 			depart.addItemListener(new DepartItemListener());
 			
-			TopPanel.add(new JLabel("      Á÷Ã¥ : "));
+			TopPanel.add(new JLabel("      ì§ì±… : "));
 			TopPanel.add(type = new JComboBox(item2));
 			
 			addPanel.setLayout(new GridLayout(3, 2));
 			
-			addPanel.add(new JLabel("                               ÁÖ¼Ò : "));
+			addPanel.add(new JLabel("                               ì£¼ì†Œ : "));
 			addPanel.add(address = new JTextField());
 			address.setPreferredSize(new Dimension(200, 20));
 			
 			addPanel.add(new JLabel("                              e-mail :"));
 			addPanel.add(email = new JTextField());
 			
-			addPanel.add(new JLabel("                             ÀüÈ­¹øÈ£ :"));
+			addPanel.add(new JLabel("                             ì „í™”ë²ˆí˜¸ :"));
 			addPanel.add(phone = new JTextField());
 			
 			BottomPanel.add(submit);
@@ -105,15 +106,15 @@ public class OperationsDialog extends JDialog {
 			
 			setSize(500, 300);
 		}
-		else if(cmd.equals("¸ñ·Ï Á¤·Ä")) {
-			submit = new JButton("È®ÀÎ");
+		else if(cmd.equals("ëª©ë¡ ì •ë ¬")) {
+			submit = new JButton("í™•ì¸");
 			TopPanel.setLayout(new GridLayout(2, 2));
 
-			TopPanel.add(new JLabel("  Á¤·Ä ±âÁØ : "));
+			TopPanel.add(new JLabel("  ì •ë ¬ ê¸°ì¤€ : "));
 			TopPanel.add(crit1 = new JComboBox(item5));
 			crit1.setPreferredSize(new Dimension(80, 20));
 			
-			TopPanel.add(new JLabel("  Á¤·Ä ¹æ½Ä : "));
+			TopPanel.add(new JLabel("  ì •ë ¬ ë°©ì‹ : "));
 			TopPanel.add(crit2 = new JComboBox(item6));
 			BottomPanel.add(submit);
 			BottomPanel.add(cancel);
@@ -123,7 +124,7 @@ public class OperationsDialog extends JDialog {
 			
 			setSize(200, 150);
 		}
-		else {	// »èÁ¦, º¯°æ, °Ë»ö => ¿ì¼± °Ë»ö ÈÄ »èÁ¦ or º¯°æ
+		else {	// ì‚­ì œ, ë³€ê²½, ê²€ìƒ‰ => ìš°ì„  ê²€ìƒ‰ í›„ ì‚­ì œ or ë³€ê²½
 			TopPanel.setLayout(new GridLayout(4, 2));
 			setItem4();
 			
@@ -132,7 +133,7 @@ public class OperationsDialog extends JDialog {
 			group.add(radioDepart);
 			group.add(radioManager);
 			
-			submit = new JButton("°Ë»ö");
+			submit = new JButton("ê²€ìƒ‰");
 			TopPanel.add(radioId);
 			TopPanel.add(id = new JTextField());
 			id.setPreferredSize(new Dimension(120, 20));
@@ -169,14 +170,14 @@ public class OperationsDialog extends JDialog {
 		Dimension frameSize = this.getSize();
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation((screenSize.width - frameSize.width)/2, (screenSize.height - frameSize.height)/2);
-		// ½ºÅ©¸°ÀÇ Áß¾Ó¿¡ ¹èÄ¡
+		// ìŠ¤í¬ë¦°ì˜ ì¤‘ì•™ì— ë°°ì¹˜
 		
 		setResizable(false);
 		setVisible(true);
 	}
-	public OperationsDialog(JFrame frame, Object obj[]) {		// º¯°æ
+	public OperationsDialog(JFrame frame, Object obj[]) {		// ë³€ê²½
 		super(frame, true);
-		setTitle("Á÷¿øÁ¤º¸ º¯°æ");
+		setTitle("ì§ì›ì •ë³´ ë³€ê²½");
 		add(MainPanel);
 		MainPanel.add(TopPanel);
 		MainPanel.add(addPanel);
@@ -184,24 +185,24 @@ public class OperationsDialog extends JDialog {
 	
 		TopPanel.setLayout(new GridLayout(4, 2));
 		
-		submit = new JButton("º¯°æ");
+		submit = new JButton("ë³€ê²½");
 		TopPanel.add(new JLabel("      ID : "));
 		TopPanel.add(id = new JTextField());
-		id.setPreferredSize(new Dimension(120, 20));	// id¸¸ Å©±â ÁöÁ¤ÇØÁàµµ ¸ğµç Grid¿¡ Àû¿ëµÊ
+		id.setPreferredSize(new Dimension(120, 20));	// idë§Œ í¬ê¸° ì§€ì •í•´ì¤˜ë„ ëª¨ë“  Gridì— ì ìš©ë¨
 		id.setText(obj[0].toString());
 		id.setEditable(false);
 			
-		TopPanel.add(new JLabel("      ÀÌ¸§ : "));
+		TopPanel.add(new JLabel("      ì´ë¦„ : "));
 		TopPanel.add(name = new JTextField());
 		name.setText(obj[1].toString());
 		
-		TopPanel.add(new JLabel("      ºÎ¼­ : "));
+		TopPanel.add(new JLabel("      ë¶€ì„œ : "));
 		TopPanel.add(depart = new JComboBox(item1));
 		depart.setSelectedItem(obj[2]);
 		depart.addItemListener(new DepartItemListener());
 			
-		TopPanel.add(new JLabel("      Á÷Ã¥ : "));
-		if(obj[2].toString().equals("ºñ¼­½Ç") || obj[2].toString().equals("ÃÑ¹«ÆÀ")|| obj[2].toString().equals("ÀÎ»çÆÀ"))
+		TopPanel.add(new JLabel("      ì§ì±… : "));
+		if(obj[2].toString().equals("ë¹„ì„œì‹¤") || obj[2].toString().equals("ì´ë¬´íŒ€")|| obj[2].toString().equals("ì¸ì‚¬íŒ€"))
 			TopPanel.add(type = new JComboBox(item2));
 		else
 			TopPanel.add(type = new JComboBox(item3));
@@ -209,18 +210,18 @@ public class OperationsDialog extends JDialog {
 		
 		addPanel.setLayout(new GridLayout(3,2));
 		
-		addPanel.add(new JLabel("                               ÁÖ¼Ò : "));
+		addPanel.add(new JLabel("                               ì£¼ì†Œ : "));
 		addPanel.add(address = new JTextField());
-		address.setPreferredSize(new Dimension(200, 20));	// id¸¸ Å©±â ÁöÁ¤ÇØÁàµµ ¸ğµç Grid¿¡ Àû¿ëµÊ
+		address.setPreferredSize(new Dimension(200, 20));	// idë§Œ í¬ê¸° ì§€ì •í•´ì¤˜ë„ ëª¨ë“  Gridì— ì ìš©ë¨
 		System.out.println(this.addr);
 		address.setText(this.addr);
 		
 		addPanel.add(new JLabel("                               email : "));
 		addPanel.add(email = new JTextField());
-		System.out.println(this.mail);
+		System.out.println(obj[5].toString());
 		email.setText(this.mail);
 		
-		addPanel.add(new JLabel("                               ÀüÈ­¹øÈ£ : "));
+		addPanel.add(new JLabel("                               ì „í™”ë²ˆí˜¸ : "));
 		addPanel.add(phone = new JTextField());
 		System.out.println(this.num);
 		email.setText(this.num);
@@ -236,7 +237,7 @@ public class OperationsDialog extends JDialog {
 		Dimension frameSize = this.getSize();
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation((screenSize.width - frameSize.width)/2, (screenSize.height - frameSize.height)/2);
-		// ½ºÅ©¸°ÀÇ Áß¾Ó¿¡ ¹èÄ¡
+		// ìŠ¤í¬ë¦°ì˜ ì¤‘ì•™ì— ë°°ì¹˜
 		
 		setResizable(false);
 		setVisible(true);
@@ -250,7 +251,7 @@ public class OperationsDialog extends JDialog {
 	class DepartItemListener implements ItemListener {
 		public void itemStateChanged(ItemEvent e) {
 			String item = e.getItem().toString();
-			if(item.equals("ºñ¼­½Ç") || item.equals("ÃÑ¹«ÆÀ") || item.equals("ÀÎ»çÆÀ")) {
+			if(item.equals("ë¹„ì„œì‹¤") || item.equals("ì´ë¬´íŒ€") || item.equals("ì¸ì‚¬íŒ€")) {
 				if(type != null)
 					type.removeAllItems();
 				for(int i = 0; i < item2.length; i++)
@@ -298,77 +299,71 @@ public class OperationsDialog extends JDialog {
 		public void mouseClicked(MouseEvent e) {
 			Object[] temporaryObject = {id.getText(), name.getText(), depart.getSelectedItem(), type.getSelectedItem(), " ",address.getText(),email.getText(),phone.getText()};
 			if(temporaryObject[0].toString().equals("") || temporaryObject[1].toString().equals("")) {
-				new ErrorDialog(SW.Main.mainFrame, "ID¿Í ÀÌ¸§Àº ¹İµå½Ã ÀÔ·ÂÇØ¾ßÇÕ´Ï´Ù!");
+				new ErrorDialog(SW.Main.mainFrame, "IDì™€ ì´ë¦„ì€ ë°˜ë“œì‹œ ì…ë ¥í•´ì•¼í•©ë‹ˆë‹¤!");
 				return;
 			}
-			if(!SW.UserTable.checkId(id.getText())) {		// checkId°¡ TRUE°¡ Áßº¹¾øÀ½. FALSE´Â Áßº¹.
-				new ErrorDialog(SW.Main.mainFrame, "ÇØ´ç ID´Â ÀÌ¹Ì »ç¿ëÁßÀÔ´Ï´Ù.");
+			if(!SW.UserTable.checkId(id.getText())) {		// checkIdê°€ TRUEê°€ ì¤‘ë³µì—†ìŒ. FALSEëŠ” ì¤‘ë³µ.
+				new ErrorDialog(SW.Main.mainFrame, "í•´ë‹¹ IDëŠ” ì´ë¯¸ ì‚¬ìš©ì¤‘ì…ë‹ˆë‹¤.");
 				return;
 			}
-			addr = address.getText();
-			num = phone.getText();
-			mail = email.getText();
-			System.out.println();
-			System.out.println(addr);
-			System.out.println(mail);
-			System.out.println(num);
 			SW.UserTable.addUser(temporaryObject);
 			dispose();
-			SW.HRSW.logging("½Å±ÔÁ÷¿ø Ãß°¡ - ID(" + temporaryObject[0].toString() + ")");
+			SW.HRSW.logging("ì‹ ê·œì§ì› ì¶”ê°€ - ID(" + temporaryObject[0].toString() + ")");
 		}
 	}
 	
 	class sortButtonMouseListener extends MouseAdapter {
 		public void mouseClicked(MouseEvent e) {
-			if(crit2.getSelectedItem().toString().equals("¿À¸§Â÷¼ø")) {		// ¿À¸§Â÷¼ø "ID", "ÀÌ¸§", "ºÎ¼­", "Á÷Ã¥", "¸Å´ÏÀú"
+			if(crit2.getSelectedItem().toString().equals("ì˜¤ë¦„ì°¨ìˆœ")) {		// ì˜¤ë¦„ì°¨ìˆœ "ID", "ì´ë¦„", "ë¶€ì„œ", "ì§ì±…", "ë§¤ë‹ˆì €"
 				if(crit1.getSelectedItem().toString().equals("ID"))
 					Collections.sort(UserTable.User, new IdAscComparator());
-				else if(crit1.getSelectedItem().toString().equals("ÀÌ¸§"))
+				else if(crit1.getSelectedItem().toString().equals("ì´ë¦„"))
 					Collections.sort(UserTable.User, new NameAscComparator());
-				else if(crit1.getSelectedItem().toString().equals("ºÎ¼­"))
+				else if(crit1.getSelectedItem().toString().equals("ë¶€ì„œ"))
 					Collections.sort(UserTable.User, new DepartAscComparator());
-				else if(crit1.getSelectedItem().toString().equals("Á÷Ã¥"))
+				else if(crit1.getSelectedItem().toString().equals("ì§ì±…"))
 					Collections.sort(UserTable.User, new TypeAscComparator());
-				else if(crit1.getSelectedItem().toString().equals("¸Å´ÏÀú"))
+				else if(crit1.getSelectedItem().toString().equals("ë§¤ë‹ˆì €"))
 					Collections.sort(UserTable.User, new ManagerAscComparator());
 			}	
-			else {		// ³»¸²Â÷¼ø
+			else {		// ë‚´ë¦¼ì°¨ìˆœ
 				if(crit1.getSelectedItem().toString().equals("ID"))
 					Collections.sort(UserTable.User, new IdDescComparator());
-				else if(crit1.getSelectedItem().toString().equals("ÀÌ¸§"))
+				else if(crit1.getSelectedItem().toString().equals("ì´ë¦„"))
 					Collections.sort(UserTable.User, new NameDescComparator());
-				else if(crit1.getSelectedItem().toString().equals("ºÎ¼­"))
+				else if(crit1.getSelectedItem().toString().equals("ë¶€ì„œ"))
 					Collections.sort(UserTable.User, new DepartDescComparator());
-				else if(crit1.getSelectedItem().toString().equals("Á÷Ã¥"))
+				else if(crit1.getSelectedItem().toString().equals("ì§ì±…"))
 					Collections.sort(UserTable.User, new TypeDescComparator());
-				else if(crit1.getSelectedItem().toString().equals("¸Å´ÏÀú"))
+				else if(crit1.getSelectedItem().toString().equals("ë§¤ë‹ˆì €"))
 					Collections.sort(UserTable.User, new ManagerDescComparator());
 			}
 			
 			MainFrame.refreshDBPane();
 			dispose();
-			SW.HRSW.logging("¸ñ·Ï Á¤·Ä - ±âÁØ(" + crit1.getSelectedItem().toString() + "," + crit2.getSelectedItem().toString() + ")");
+			SW.HRSW.logging("ëª©ë¡ ì •ë ¬ - ê¸°ì¤€(" + crit1.getSelectedItem().toString() + "," + crit2.getSelectedItem().toString() + ")");
 		}
 	}
 	
 	class correctButtonMouseListener extends MouseAdapter {
 		public void mouseClicked(MouseEvent e) {
-			Object[] temporaryObject = {id.getText(), name.getText(), depart.getSelectedItem(), type.getSelectedItem()};
+			Object[] temporaryObject = {id.getText(), name.getText(), depart.getSelectedItem(), type.getSelectedItem()," ",address.getText(),email.getText(),phone.getText()};
+			System.out.println("ì¶”ê°€");
 			MainFrame.correctUser(temporaryObject);
 			dispose();
-			SW.HRSW.logging("Á÷¿øÁ¤º¸ º¯°æ - ID(" + temporaryObject[0].toString() + ")");
+			SW.HRSW.logging("ì§ì›ì •ë³´ ë³€ê²½ - ID(" + temporaryObject[0].toString() + ")");
 		}
 	}
 	
 	class searchButtonMouseListener extends MouseAdapter {
 		public void mouseClicked(MouseEvent e) {
 			Object[] tempObject = {id.getText(), name.getText(), depart.getSelectedItem(), manager.getSelectedItem()};
-			int selected = -1;	// °Ë»ö±âÁØ
+			int selected = -1;	// ê²€ìƒ‰ê¸°ì¤€
 			/*
-			 * ±âÁØ - 	ID : 0
-			 * 		 	ÀÌ¸§ : 1
-			 * 			ºÎ¼­ : 2
-			 * 			¸Å´ÏÀú¸í : 3
+			 * ê¸°ì¤€ - 	ID : 0
+			 * 		 	ì´ë¦„ : 1
+			 * 			ë¶€ì„œ : 2
+			 * 			ë§¤ë‹ˆì €ëª… : 3
 			 */
 			
 			if(radioId.isSelected())
