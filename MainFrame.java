@@ -30,17 +30,17 @@ public class MainFrame extends JFrame {
 	static JMenuBar MenuBar = new JMenuBar();
 	static JPanel MainPane = new JPanel();
 	
-	static String columnNames[] = {"Á÷¿ø ID", "ÀÌ¸§", "¼Ò¼Ó", "Á÷Ã¥", "ÀüÈ­¹øÈ£"};
+	static String columnNames[] = {"ì§ì› ID", "ì´ë¦„", "ì†Œì†", "ì§ì±…", "ì „í™”ë²ˆí˜¸"};
 	
 	static DefaultTableModel realTableModel = new DefaultTableModel(null, columnNames) {
 		public boolean isCellEditable(int row, int column) {
-			return false;			// Å×ÀÌºíÀ» Á÷Á¢ ¼öÁ¤ÇÏ´Â °ÍÀº ºÒ°¡´ÉÇÏµµ·Ï ÇÔ
+			return false;			// í…Œì´ë¸”ì„ ì§ì ‘ ìˆ˜ì •í•˜ëŠ” ê²ƒì€ ë¶ˆê°€ëŠ¥í•˜ë„ë¡ í•¨
 		}
 	};
 	
 	static DefaultTableModel fakeTableModel = new DefaultTableModel(null, columnNames) {
 		public boolean isCellEditable(int row, int column) {
-			return false;			// Å×ÀÌºíÀ» Á÷Á¢ ¼öÁ¤ÇÏ´Â °ÍÀº ºÒ°¡´ÉÇÏµµ·Ï ÇÔ
+			return false;			// í…Œì´ë¸”ì„ ì§ì ‘ ìˆ˜ì •í•˜ëŠ” ê²ƒì€ ë¶ˆê°€ëŠ¥í•˜ë„ë¡ í•¨
 		}
 	};
 	
@@ -54,13 +54,16 @@ public class MainFrame extends JFrame {
 	static JButton correctButton;
 	static JButton deleteButton;
 	static JButton returnButton;
+	static JButton presentButton;
+	static JButton scoreButton;
+	static JButton infoButton;
 	
 	static boolean Toggle = false;		// false : DB, true : Log
 	
 	
 	public MainFrame() {
 		
-		this.setTitle("°æ±â S/W Á÷¿ø °ü¸® ÇÁ·Î±×·¥");
+		this.setTitle("ê²½ê¸° S/W ì§ì› ê´€ë¦¬ í”„ë¡œê·¸ë¨");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setJMenuBar(MenuBar);
 		
@@ -69,8 +72,8 @@ public class MainFrame extends JFrame {
 		MainPane.setLayout(new BorderLayout(30, 20));
 		MainPane.add(DBListPane, BorderLayout.CENTER);
 		
-		realJTable.setSelectionMode(0);			// ÇÑ¹ø¿¡ ÇÏ³ªÀÇ Row¸¸ ¼±ÅÃÇÒ ¼ö ÀÖµµ·Ï ¼³Á¤
-		fakeJTable.setSelectionMode(0);			// ÇÑ¹ø¿¡ ÇÏ³ªÀÇ Row¸¸ ¼±ÅÃÇÒ ¼ö ÀÖµµ·Ï ¼³Á¤
+		realJTable.setSelectionMode(0);			// í•œë²ˆì— í•˜ë‚˜ì˜ Rowë§Œ ì„ íƒí•  ìˆ˜ ìˆë„ë¡ ì„¤ì •
+		fakeJTable.setSelectionMode(0);			// í•œë²ˆì— í•˜ë‚˜ì˜ Rowë§Œ ì„ íƒí•  ìˆ˜ ìˆë„ë¡ ì„¤ì •
 		DefaultTableCellRenderer CellRenderer = new DefaultTableCellRenderer();
 		CellRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 		TableColumnModel realTCM = realJTable.getColumnModel();
@@ -81,13 +84,12 @@ public class MainFrame extends JFrame {
 		for(int i = 0; i < fakeTCM.getColumnCount(); i++) 
 			fakeTCM.getColumn(i).setCellRenderer(CellRenderer);
 		
-		
 		this.setSize(600, 500);
 		
 		Dimension frameSize = this.getSize();
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setLocation((screenSize.width - frameSize.width)/2, (screenSize.height - frameSize.height)/2);
-		// ½ºÅ©¸°ÀÇ Áß¾Ó¿¡ ¹èÄ¡
+		// ìŠ¤í¬ë¦°ì˜ ì¤‘ì•™ì— ë°°ì¹˜
 		
 		this.setResizable(false);
 		this.setVisible(true);
@@ -101,7 +103,7 @@ public class MainFrame extends JFrame {
 			Menu[i] = new JMenu(MenuTitle[i]);
 		
 		JMenuItem DBMenuItem[] = new JMenuItem[2];	// Database Menu
-		JMenuItem OPMenuItem[] = new JMenuItem[5];	// Operations Menu
+		JMenuItem OPMenuItem[] = new JMenuItem[7];	// Operations Menu
 		JMenuItem HIMenuItem[] = new JMenuItem[2];	// History Menu
 		JMenuItem QUMenuItem[] = new JMenuItem[1];	// Quit Menu
 		
@@ -113,11 +115,13 @@ public class MainFrame extends JFrame {
 			Menu[0].add(DBMenuItem[i]);
 		}
 		
-		OPMenuItem[0] = new JMenuItem("½Å±ÔÁ÷¿ø Ãß°¡");
-		OPMenuItem[1] = new JMenuItem("Á÷¿øÁ¤º¸ »èÁ¦");
-		OPMenuItem[2] = new JMenuItem("Á÷¿øÁ¤º¸ º¯°æ");
-		OPMenuItem[3] = new JMenuItem("Á÷¿ø °Ë»ö");
-		OPMenuItem[4] = new JMenuItem("¸ñ·Ï Á¤·Ä");
+		OPMenuItem[0] = new JMenuItem("ì‹ ê·œì§ì› ì¶”ê°€");
+		OPMenuItem[1] = new JMenuItem("ì§ì›ì •ë³´ ì‚­ì œ");
+		OPMenuItem[2] = new JMenuItem("ì§ì›ì •ë³´ ë³€ê²½");
+		OPMenuItem[3] = new JMenuItem("ì§ì› ê²€ìƒ‰");
+		OPMenuItem[4] = new JMenuItem("ëª©ë¡ ì •ë ¬");
+		OPMenuItem[5] = new JMenuItem("ì„ ë¬¼í•˜ê¸°");
+		OPMenuItem[6] = new JMenuItem("ì§ì› í‰ê°€");
 		
 		for(int i = 0; i < OPMenuItem.length; i++) {
 			OPMenuItem[i].addActionListener(new MenuActionListener());
@@ -162,7 +166,7 @@ public class MainFrame extends JFrame {
 				for(int i = 0; i < SW.UserTable.User.size(); i++)
 					addUser(SW.UserTable.User.elementAt(i));
 				
-				SW.HRSW.logging(FileName + "À» ÀĞÀ½");
+				SW.HRSW.logging(FileName + "ì„ ì½ìŒ");
 			}
 			else if(cmd.equals("Save")) {
 				FileDialog FD = new FileDialog();
@@ -170,22 +174,28 @@ public class MainFrame extends JFrame {
 				if(FileName == null)
 					return;
 				SW.HRSW.saveToFile(FileName);
-				SW.HRSW.logging(FileName + "¿¡ ÀúÀå");
+				SW.HRSW.logging(FileName + "ì— ì €ì¥");
 			}
-			else if(cmd.equals("½Å±ÔÁ÷¿ø Ãß°¡")) {
+			else if(cmd.equals("ì‹ ê·œì§ì› ì¶”ê°€")) {
 				new OperationsDialog(SW.Main.mainFrame, cmd);
 			}
-			else if(cmd.equals("Á÷¿øÁ¤º¸ »èÁ¦")) {
+			else if(cmd.equals("ì§ì›ì •ë³´ ì‚­ì œ")) {
 				new OperationsDialog(SW.Main.mainFrame, cmd);
 			}
-			else if(cmd.equals("Á÷¿øÁ¤º¸ º¯°æ")) {
+			else if(cmd.equals("ì§ì›ì •ë³´ ë³€ê²½")) {
 				new OperationsDialog(SW.Main.mainFrame, cmd);
 			}
-			else if(cmd.equals("Á÷¿ø °Ë»ö")) {
+			else if(cmd.equals("ì§ì› ê²€ìƒ‰")) {
 				new OperationsDialog(SW.Main.mainFrame, cmd);
 			}
-			else if(cmd.equals("¸ñ·Ï Á¤·Ä")) {
+			else if(cmd.equals("ëª©ë¡ ì •ë ¬")) {
 				new OperationsDialog(SW.Main.mainFrame, cmd);
+			}
+			else if(cmd.equals("ì„ ë¬¼í•˜ê¸°")) {
+				new OperationsDialog(SW.Main.mainFrame,cmd);
+			}
+			else if(cmd.contentEquals("ì§ì› í‰ê°€")){
+				new OperationsDialog(SW.Main.mainFrame,cmd);
 			}
 			else if(cmd.equals("Change the Log File")) {
 				FileDialog FD = new FileDialog();
@@ -193,7 +203,7 @@ public class MainFrame extends JFrame {
 				HRSW.changeLogFile(LogFileName);
 				if(LogFileName == null)
 					return;
-				SW.HRSW.logging(LogFileName + "·Î ·Î±× ÆÄÀÏ º¯°æ");
+				SW.HRSW.logging(LogFileName + "ë¡œ ë¡œê·¸ íŒŒì¼ ë³€ê²½");
 			}
 			else if(cmd.equals("Show the Log File")) {
 				if(Toggle) {		// Show the DB
@@ -206,11 +216,11 @@ public class MainFrame extends JFrame {
 				}
 			}
 			else if(cmd.equals("Quit")) {
-				new SaveDialog(SW.Main.mainFrame, "<html><div style=text-align:center>ÀÌ´ë·Î Á¾·áÇÏ¸é Áö±İ±îÁö ÀÛ¾÷ÇÑ µ¥ÀÌÅÍ¸¦ "
-						+ "<br>ÀÒ¾î¹ö¸± ¼ö ÀÖ½À´Ï´Ù. Á¾·áÇÏ½Ã°Ú½À´Ï±î?</div></html>");
+				new SaveDialog(SW.Main.mainFrame, "<html><div style=text-align:center>ì´ëŒ€ë¡œ ì¢…ë£Œí•˜ë©´ ì§€ê¸ˆê¹Œì§€ ì‘ì—…í•œ ë°ì´í„°ë¥¼ "
+						+ "<br>ìƒì–´ë²„ë¦´ ìˆ˜ ìˆìŠµë‹ˆë‹¤. ì¢…ë£Œí•˜ì‹œê² ìŠµë‹ˆê¹Œ?</div></html>");
 			}
 			else 
-				System.out.println("Àß¸øµÈ ¸Ş´º Ã³¸®");
+				System.out.println("ì˜ëª»ëœ ë©”ë‰´ ì²˜ë¦¬");
 		}
 	}
 	
@@ -276,7 +286,7 @@ public class MainFrame extends JFrame {
 	public static void correctUser(Object obj[]) {
 		int selected = -1;
 		selected = fakeJTable.getSelectedRow();
-		
+		System.out.println(fakeJTable.getSelectedRow()+" "+fakeJTable.getSelectedColumn());
 		for(int i = 0; i < fakeJTable.getColumnCount() - 1; i++) {
 			fakeTableModel.setValueAt(obj[i], selected, i);
 		}
@@ -295,30 +305,30 @@ public class MainFrame extends JFrame {
 	
 	public static void searchingUser(Object tempObject[], int selected) {
 		/*
-		 * ±âÁØ - 	ID : 0
-		 * 		 	ÀÌ¸§ : 1
-		 * 			ºÎ¼­ : 2
-		 * 			¸Å´ÏÀú¸í : 3
+		 * ê¸°ì¤€ - 	ID : 0
+		 * 		 	ì´ë¦„ : 1
+		 * 			ë¶€ì„œ : 2
+		 * 			ë§¤ë‹ˆì €ëª… : 3
 		 */
 		String str = tempObject[selected].toString();
-		fakeTableModel.setRowCount(0);				// ÃÊ±âÈ­
+		fakeTableModel.setRowCount(0);				// ì´ˆê¸°í™”
 		
 		switch(selected) {
 		case 0:		// ID
 			SW.UserTable.searchById(str);
-			SW.HRSW.logging("Á÷¿ø °Ë»ö - ±âÁØ:ID(" + str + ")");
+			SW.HRSW.logging("ì§ì› ê²€ìƒ‰ - ê¸°ì¤€:ID(" + str + ")");
 			break;
-		case 1:		// ÀÌ¸§
+		case 1:		// ì´ë¦„
 			SW.UserTable.searchByName(str);
-			SW.HRSW.logging("Á÷¿ø °Ë»ö - ±âÁØ:ÀÌ¸§(" + str + ")");
+			SW.HRSW.logging("ì§ì› ê²€ìƒ‰ - ê¸°ì¤€:ì´ë¦„(" + str + ")");
 			break;
-		case 2:		// ºÎ¼­
+		case 2:		// ë¶€ì„œ
 			SW.UserTable.searchByDepart(str);
-			SW.HRSW.logging("Á÷¿ø °Ë»ö - ±âÁØ:ºÎ¼­(" + str + ")");
+			SW.HRSW.logging("ì§ì› ê²€ìƒ‰ - ê¸°ì¤€:ë¶€ì„œ(" + str + ")");
 			break;
-		case 3:		// ¸Å´ÏÀú¸í
+		case 3:		// ë§¤ë‹ˆì €ëª…
 			SW.UserTable.searchByManager(str);
-			SW.HRSW.logging("Á÷¿ø °Ë»ö - ±âÁØ:¸Å´ÏÀú¸í(" + str + ")");
+			SW.HRSW.logging("ì§ì› ê²€ìƒ‰ - ê¸°ì¤€:ë§¤ë‹ˆì €ëª…(" + str + ")");
 			break;
 		default:
 			break;
@@ -329,22 +339,33 @@ public class MainFrame extends JFrame {
 		MainPane.add(SDBListPane, BorderLayout.CENTER);
 		
 		if(fakeTableModel.getRowCount() == 0) {
-			new ErrorDialog(SW.Main.mainFrame, "<html><div style=text-align:center>Á¶°Ç¿¡ ¸Â´Â µ¥ÀÌÅÍ°¡ ¾ø½À´Ï´Ù.<br>¸ğµç°á°ú¸¦ °¡Á®¿É´Ï´Ù.</div></html>");
-			SW.HRSW.logging("Á÷¿ø °Ë»ö - °Ë»ö ½ÇÆĞ ¸ğµç Á÷¿ø Ãâ·Â");
+			new ErrorDialog(SW.Main.mainFrame, "<html><div style=text-align:center>ì¡°ê±´ì— ë§ëŠ” ë°ì´í„°ê°€ ì—†ìŠµë‹ˆë‹¤.<br>ëª¨ë“ ê²°ê³¼ë¥¼ ê°€ì ¸ì˜µë‹ˆë‹¤.</div></html>");
+			SW.HRSW.logging("ì§ì› ê²€ìƒ‰ - ê²€ìƒ‰ ì‹¤íŒ¨ ëª¨ë“  ì§ì› ì¶œë ¥");
 			SW.UserTable.addAllUser();
 		}
 		
-		correctButton = new JButton("º¯°æ");
-		deleteButton = new JButton("»èÁ¦");
-		returnButton = new JButton("µ¹¾Æ°¡±â");
+		correctButton = new JButton("ë³€ê²½");
+		deleteButton = new JButton("ì‚­ì œ");
+		returnButton = new JButton("ëŒì•„ê°€ê¸°");
+		presentButton = new JButton("ì„ ë¬¼í•˜ê¸°");
+		scoreButton = new JButton("ì§ì› í‰ê°€");
+		infoButton = new JButton("ìƒì„¸ ì •ë³´");
 		
 		correctButton.addMouseListener(new ButtonListener());
 		deleteButton.addMouseListener(new ButtonListener());
 		returnButton.addMouseListener(new ButtonListener());
+		presentButton.addMouseListener(new ButtonListener());
+		scoreButton.addMouseListener(new ButtonListener());
+		infoButton.addMouseListener(new ButtonListener());
 		
 		ButtonPane.add(correctButton);
 		ButtonPane.add(deleteButton);
 		ButtonPane.add(returnButton);
+		ButtonPane.add(presentButton);
+		ButtonPane.add(scoreButton);
+		ButtonPane.add(infoButton);
+		
+		
 		MainPane.add(ButtonPane, BorderLayout.SOUTH);
 		MainPane.revalidate();
 		ButtonPane.revalidate();
@@ -357,32 +378,57 @@ public class MainFrame extends JFrame {
 				Object tempObject[] = new Object[5];
 				for(int i = 0; i < tempObject.length; i++)
 					tempObject[i] = fakeJTable.getValueAt(selected, i);
-				if(tempObject[4].toString().equals("O")) {				// ¸Å´ÏÀú´Â º¯°æ ºÒ°¡´É
-					new ErrorDialog(SW.Main.mainFrame, "¸Å´ÏÀú´Â º¯°æ ºÒ°¡´ÉÇÕ´Ï´Ù!");
+				if(tempObject[4].toString().equals("O")) {				// ë§¤ë‹ˆì €ëŠ” ë³€ê²½ ë¶ˆê°€ëŠ¥
+					new ErrorDialog(SW.Main.mainFrame, "ë§¤ë‹ˆì €ëŠ” ë³€ê²½ ë¶ˆê°€ëŠ¥í•©ë‹ˆë‹¤!");
 					return;
 				}
 				new OperationsDialog(SW.Main.mainFrame, tempObject);
 			}
 			else if(e.getSource().equals(deleteButton)) {
 				int selected = fakeJTable.getSelectedRow();
-				Object tempObject[] = new Object[5];
+				Object tempObject[] = new Object[9];
 				for(int i = 0; i < tempObject.length; i++)
 					tempObject[i] = fakeJTable.getValueAt(selected, i);
-				if(tempObject[4].toString().equals("O")) {				// ¸Å´ÏÀú´Â »èÁ¦ ºÒ°¡´É
-					new ErrorDialog(SW.Main.mainFrame, "¸Å´ÏÀú´Â »èÁ¦ ºÒ°¡´ÉÇÕ´Ï´Ù!");
+				if(tempObject[4].toString().equals("O")) {				// ë§¤ë‹ˆì €ëŠ” ì‚­ì œ ë¶ˆê°€ëŠ¥
+					new ErrorDialog(SW.Main.mainFrame, "ë§¤ë‹ˆì €ëŠ” ì‚­ì œ ë¶ˆê°€ëŠ¥í•©ë‹ˆë‹¤!");
 					return;
 				}
 				
 				fakeTableModel.removeRow(selected);
 				SW.UserTable.deleteUser(tempObject[0].toString());
 				realTableModel.removeRow(findRow(tempObject[0].toString()));
-				SW.HRSW.logging("Á÷¿øÁ¤º¸ »èÁ¦ - ID(" + tempObject[0].toString() + ")");
+				SW.HRSW.logging("ì§ì›ì •ë³´ ì‚­ì œ - ID(" + tempObject[0].toString() + ")");
 			}
 			else if(e.getSource().equals(returnButton)) {
 				if(Toggle)
 					showLogPane();
 				else
 					showDBPane();
+			}
+			else if(e.getSource().equals(presentButton)){
+				new present(SW.Main.mainFrame);
+			}
+			else if(e.getSource().equals(scoreButton)) {
+				int selected = fakeJTable.getSelectedRow();
+				Object tempObject[] = new Object[5];
+				for(int i = 0; i < tempObject.length; i++)
+					tempObject[i] = fakeJTable.getValueAt(selected, i);
+				if(tempObject[4].toString().equals("O")) {				// ë§¤ë‹ˆì €ëŠ” ë³€ê²½ ë¶ˆê°€ëŠ¥
+					new ErrorDialog(SW.Main.mainFrame, "ë§¤ë‹ˆì €ëŠ” ë³€ê²½ ë¶ˆê°€ëŠ¥í•©ë‹ˆë‹¤!");
+					return;
+				}
+				new Evaluation(SW.Main.mainFrame, tempObject);
+			}
+			else if(e.getSource().equals(infoButton)) {
+				int selected = fakeJTable.getSelectedRow();
+				Object tempObject[] = new Object[5];
+				for(int i = 0; i < tempObject.length; i++)
+					tempObject[i] = fakeJTable.getValueAt(selected, i);
+				if(tempObject[4].toString().equals("O")) {				// ë§¤ë‹ˆì €ëŠ” ë³€ê²½ ë¶ˆê°€ëŠ¥
+					new ErrorDialog(SW.Main.mainFrame, "ë§¤ë‹ˆì €ëŠ” ë³€ê²½ ë¶ˆê°€ëŠ¥í•©ë‹ˆë‹¤!");
+					return;
+				}
+				new info(SW.Main.mainFrame, tempObject);
 			}
 		}
 	}
